@@ -1,4 +1,4 @@
-const MAX_ENERGY = 20;
+const MAX_ENERGY = 15;
 
 let playerEnergy = MAX_ENERGY;
 let aiEnergy = MAX_ENERGY;
