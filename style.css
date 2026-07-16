@@ -655,3 +655,120 @@ body {
     object-position: 50% 48%;
   }
 }
+
+
+
+/* =========================================================
+   Mobile landscape full-viewport fix
+   - Removes side letterboxing on wide mobile browser viewports
+   - Keeps portrait mode at 9:16
+   ========================================================= */
+@media (orientation: landscape) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #050608;
+  }
+
+  body {
+    display: block;
+  }
+
+  .game-shell {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    min-height: 100svh;
+    margin: 0;
+    aspect-ratio: auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .scene {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .scene-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 48%;
+  }
+
+  .hud {
+    width: min(62vw, 820px);
+  }
+
+  .hud-ai {
+    top: clamp(8px, 1.8dvh, 16px);
+  }
+
+  .hud-player {
+    bottom: clamp(8px, 1.8dvh, 16px);
+  }
+
+  .battle-zone {
+    top: 66%;
+    width: min(42vw, 620px);
+    height: 26%;
+  }
+
+  .played-card {
+    width: clamp(62px, 6.2vw, 112px);
+  }
+
+  .round-message {
+    max-width: 38%;
+    font-size: clamp(10px, 1.05vw, 16px);
+  }
+
+  .hand-panel {
+    width: 100%;
+    padding:
+      clamp(5px, .8dvh, 10px)
+      max(10px, env(safe-area-inset-right))
+      max(clamp(7px, 1dvh, 12px), env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+  }
+
+  .hand-title {
+    margin-bottom: 3px;
+  }
+
+  .card-hand {
+    min-height: 0;
+    gap: clamp(3px, .45vw, 8px);
+    padding: 1px 4px 3px;
+  }
+
+  .hand-card {
+    width: clamp(40px, 4.8vw, 74px);
+  }
+}
+
+/* Extra-wide phone landscape: use the additional width rather than letterbox it */
+@media (orientation: landscape) and (min-aspect-ratio: 19 / 9) {
+  .scene-image {
+    object-position: 50% 46%;
+  }
+
+  .hud {
+    width: min(58vw, 850px);
+  }
+
+  .battle-zone {
+    width: min(38vw, 600px);
+  }
+
+  .hand-card {
+    width: clamp(38px, 4.4vw, 70px);
+  }
+}
