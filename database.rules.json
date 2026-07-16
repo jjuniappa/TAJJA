@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "rooms": {
+      "$roomId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['status','hostUid','players','roundState'])",
+        "players": {
+          "$slot": {
+            ".validate": "$slot === 'p1' || $slot === 'p2'",
+            "uid": {
+              ".validate": "newData.isString() && newData.val() === auth.uid"
+            },
+            "name": {
+              ".validate": "newData.isString() && newData.val().length <= 12"
+            },
+            "energy": {
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 20"
+            }
+          }
+        }
+      }
+    }
+  }
+}
