@@ -41,4 +41,4 @@ GitHub Pages를 사용할 경우 저장소의 Settings → Pages에서 배포할
 - `assets/game-scene-ai-win.png`: AI가 이겼을 때 기뻐하는 장면
 - `assets/game-scene-ai-lose.png`: AI가 졌을 때 화난 장면
 
-각 라운드의 승패와 최종 결과에 따라 메인 이미지가 자동으로 전환됩니다.
+각 라운드의 승패와 최종 결과에 따라 반응 이미지가 표시되며, 약 3초 뒤 기본 이미지로 자동 복귀합니다.

@@ -23,12 +23,15 @@ const SCENES = {
   aiLose: "assets/game-scene-ai-lose.png",
 };
 
+let sceneResetTimer = null;
+
 function resetGame() {
   playerEnergy = MAX_ENERGY;
   aiEnergy = MAX_ENERGY;
   playerCards = Array.from({ length: 9 }, (_, i) => i + 1);
   aiCards = Array.from({ length: 9 }, (_, i) => i + 1);
   gameOver = false;
+  clearSceneResetTimer();
   setScene("neutral");
 
   setCardImage(aiPlayedCard, null, "AI 카드 뒷면");
@@ -77,7 +80,7 @@ function playRound(playerValue) {
 
   const result = resolveRound(playerValue, aiValue);
   roundMessage.textContent = result.message;
-  setScene(result.scene);
+  showTemporaryScene(result.scene, 3000);
 
   playerEnergy = Math.max(0, playerEnergy - result.playerDamage);
   aiEnergy = Math.max(0, aiEnergy - result.aiDamage);
@@ -126,6 +129,25 @@ function resolveRound(player, ai) {
     message: `패배 · PLAYER -${damage}`,
     scene: "aiWin",
   };
+}
+
+function clearSceneResetTimer() {
+  if (sceneResetTimer !== null) {
+    window.clearTimeout(sceneResetTimer);
+    sceneResetTimer = null;
+  }
+}
+
+function showTemporaryScene(sceneName, duration = 3000) {
+  clearSceneResetTimer();
+  setScene(sceneName);
+
+  if (sceneName === "neutral") return;
+
+  sceneResetTimer = window.setTimeout(() => {
+    setScene("neutral");
+    sceneResetTimer = null;
+  }, duration);
 }
 
 function setScene(sceneName) {
@@ -185,12 +207,13 @@ function endGame() {
   let result;
   if (playerEnergy > aiEnergy) {
     result = "최종 승리";
-    setScene("aiLose");
+    showTemporaryScene("aiLose", 3000);
   } else if (playerEnergy < aiEnergy) {
     result = "최종 패배";
-    setScene("aiWin");
+    showTemporaryScene("aiWin", 3000);
   } else {
     result = "최종 무승부";
+    clearSceneResetTimer();
     setScene("neutral");
   }
 
